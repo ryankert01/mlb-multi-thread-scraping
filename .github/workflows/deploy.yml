@@ -22,7 +22,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCOUNT_TOKEN: ${{ secrets.ACCOUNT_TOKEN }} 
-        run: python main.py
+        run: python mlb.py
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
