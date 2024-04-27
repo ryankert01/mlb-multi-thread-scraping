@@ -143,7 +143,7 @@ class MLBScraper:
             except:
                 print("Failed to scrape data, retrying...")
                 self.driver.refresh()
-                break
+                continue
             
             if self.click_next_button() == False:
                 break
