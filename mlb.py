@@ -192,15 +192,21 @@ class MLBScraper:
 
 
 if __name__ == "__main__":
-    ray.init()
+    # ray.init()
+    # y_start = 2003
+    # y_end = 2024
+    # y_mid = (y_start + y_end) // 2
+    # scrapers = [MLBScraper.remote() for i in range(y_start, y_end)]
+    # print(len(scrapers))
+    # s = []
+    # for i in range(y_start, y_end):
+    #     s.append(scrapers[i-y_start].parse_year_data.remote(i))
+    # ray.get(s)
+    # ray.shutdown()
+
     y_start = 2003
     y_end = 2024
-    y_mid = (y_start + y_end) // 2
-    scrapers = [MLBScraper.remote() for i in range(y_start, y_end)]
-    print(len(scrapers))
-    s = []
-    for i in range(y_start, y_end):
-        s.append(scrapers[i-y_start].parse_year_data.remote(i))
-    ray.get(s)
-    ray.shutdown()
 
+    for i in range(y_start, y_end):
+        mlb = MLBScraper()
+        s.append(mlb.parse_year_data(i))
