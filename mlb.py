@@ -196,7 +196,7 @@ if __name__ == "__main__":
     y_start = 2003
     y_end = 2024
     y_mid = (y_start + y_end) // 2
-    scrapers = [MLBScraper.remote() for i in range(y_start, y_mid)]
+    scrapers = [MLBScraper.remote() for i in range(y_start, y_end)]
     print(len(scrapers))
     s = []
     for i in range(y_start, y_end):
