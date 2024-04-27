@@ -209,4 +209,4 @@ if __name__ == "__main__":
 
     for i in range(y_start, y_end):
         mlb = MLBScraper()
-        s.append(mlb.parse_year_data(i))
+        mlb.parse_year_data(i)
