@@ -8,10 +8,10 @@ y_teams = ([30] * 21)
 if __name__ == "__main__":
     assert len(y_player_hitting) == len(y_player_pitching) == len(y_teams), "Lengths of the arrays do not match"
     aggregate()
-    player_hitting = pd.read_csv('player_hitting_combined.csv')
-    player_pitching = pd.read_csv('player_pitching_combined.csv')
-    team_hitting = pd.read_csv('team_hitting_combined.csv')
-    team_pitching = pd.read_csv('team_pitching_combined.csv')
+    player_hitting = pd.read_csv('./result/player_hitting_combined.csv')
+    player_pitching = pd.read_csv('./result/player_pitching_combined.csv')
+    team_hitting = pd.read_csv('./result/team_hitting_combined.csv')
+    team_pitching = pd.read_csv('./result/team_pitching_combined.csv')
     # Verify data for each year
     years = [year for year in range(2003, 2024)]
     for year in years:
@@ -19,4 +19,11 @@ if __name__ == "__main__":
         assert len(player_pitching[player_pitching['year'] == year]) == y_player_pitching[year-2003], f"Data mismatch for year {year} in player_pitching"
         assert len(team_hitting[team_hitting['year'] == year]) == y_teams[year-2003], f"Data mismatch for year {year} in team_hitting"
         assert len(team_pitching[team_pitching['year'] == year]) == y_teams[year-2003], f"Data mismatch for year {year} in team_pitching"
+
+    # Check for NA values
+    if player_hitting.isna().any().any() or player_pitching.isna().any().any() or team_hitting.isna().any().any() or team_pitching.isna().any().any():
+        print("NA values found in the data")
+        raise ValueError("NA values found in the data")
+    else:
+        print("No NA values found in the data")
     print("All data validated successfully!")
