@@ -13,7 +13,6 @@ import csv
 import traceback
 
 from utils import get_url, aggregate_data
-import ray
 
 
 
@@ -188,6 +187,7 @@ class MLBScraper:
                 print(f"Failed to scrape data for {year}")
                 traceback.print_exc()
                 self.restart_driver()
+        return True
 
 
 
@@ -209,4 +209,4 @@ if __name__ == "__main__":
 
     for i in range(y_start, y_end):
         mlb = MLBScraper()
-        mlb.parse_year_data(i)
+        mlb.safe_parse_year_data(i)

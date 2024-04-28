@@ -1,4 +1,4 @@
-name: Course Data find
+name: Parse MLB with ray
 
 on: 
   push:
