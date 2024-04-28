@@ -3,24 +3,28 @@
 download following dependencies to run the code.
 
 ```
-selenium
-beautifulsoup4
-pandas
+pip install -r requirements.txt
 ```
 
-## Run
+## Run single-threadedly
 
 ```
-python main.py
+python mlb.py
+```
+
+## Run with Multi-thread
+
+```
+python mlb-ray.py
 ```
 
 for yearly representation required for this homework, we will have to aggregate years data in to one csv file adding a year column.
 
 ```
-python aggregate.py
+python validate.py
 ```
 
-data desired will be at the main dir `./`
+data desired will be at `./result`.
 
 ## Flaky
 
