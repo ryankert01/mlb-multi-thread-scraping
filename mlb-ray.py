@@ -49,7 +49,7 @@ if __name__ == "__main__":
     for y in range(y_start, y_end, batch_size):
         ray.init()
         scrapers = [MLBRemoteScraper.remote() for i in range(batch_size)]
-        s = [scrapers[i].parse_year_data.remote(y+i) for i in range(batch_size)]
+        s = [scrapers[i].safe_parse_year_data.remote(y+i) for i in range(batch_size)]
         ray.get(s)
         ray.shutdown()
 
