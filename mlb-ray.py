@@ -19,7 +19,7 @@ import ray
 
 terms = ("player_hitting", "player_pitching", "team_hitting", "team_pitching")
 
-# @ray.remote
+@ray.remote
 class MLBScraper:
     def __init__(self) -> None:
         self.new_instance()
