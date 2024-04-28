@@ -26,7 +26,7 @@ class MLBScraper:
 
     def new_instance(self) -> None:
         self.options = Options()
-        # self.options.add_argument("--headless")  # Enable headless mode for background processing
+        self.options.add_argument("--headless")  # Enable headless mode for background processing
         self.driver = webdriver.Chrome(options=self.options)
         self.current_time = datetime.datetime.now().isoformat() + 'Z' 
         self.driver.get("https://www.mlb.com/stats/2021")
