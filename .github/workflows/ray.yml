@@ -1,0 +1,41 @@
+name: Course Data find
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install chrome webdriver
+        run: sudo apt-get install -y chromium-browser
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python_version: 3.11
+      - name: install requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Run parsing
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCOUNT_TOKEN: ${{ secrets.ACCOUNT_TOKEN }} 
+        run: python mlb-ray.py
+      - name: Copy file to branch
+        env:
+          SRC_FOLDER_PATH: 'mlb'
+          TARGET_BRANCH: 'ray'
+        run: |
+          files=$(find $SRC_FOLDER_PATH -type f) # get the file list
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git fetch                         # fetch branches
+          git checkout $TARGET_BRANCH       # checkout to your branch
+          git checkout ${GITHUB_REF##*/} -- $files # copy files from the source branch
+          git add -A
+          git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)
+          git push origin $TARGET_BRANCH # push to remote branch
