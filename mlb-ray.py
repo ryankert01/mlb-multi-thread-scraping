@@ -45,7 +45,7 @@ class MLBRemoteScraper(MLBScraper):
 if __name__ == "__main__":
     y_start = 2003
     y_end = 2024
-    batch_size = 3
+    batch_size = 7
     for y in range(y_start, y_end, batch_size):
         ray.init()
         scrapers = [MLBRemoteScraper.remote() for i in range(batch_size)]
