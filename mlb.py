@@ -11,6 +11,7 @@ import time
 import os
 import csv
 import traceback
+import re
 
 from utils import get_url, aggregate_data
 
@@ -90,17 +91,24 @@ class MLBScraper:
             name = th.div.select('[class^=full-]')[0].text + " " + th.div.select('[class^=full-]')[1].text
         else:
             name = th.div.select('[class^=full-]')[0].text
+
+        # print(name)
+        player_url = th.find_all('a', href=re.compile(r'/player/\d+'))
+        player_url = player_url[0]['href'] if player_url else None
+        # print(player_url)
+        player_url = player_url.replace('/player/', '') if player_url else None
+        # print(player_url)
         if idx < 2:
             position = th.div.select_one('div[class^=position-]').text
-            row_data = [index, name, position]
+            row_data = [index, player_url, name, position]
         else:
-            row_data = [index, name]
+            row_data = [index, player_url, name]
         cells = row.find_all('td')
         row_data = row_data + [cell.text.strip() for cell in cells]
         return row_data
 
     def get_header_data(self, headers, idx) -> list[str]:
-        header = ["index"]
+        header = ["index", "player_url"]
         for i in range(len(headers)):
             if i % 2 == 0:
                 header.append(headers[i].text)
@@ -139,7 +147,8 @@ class MLBScraper:
             try:
                 header, r_data = self.get_table_data(idx)
                 data += r_data
-            except:
+            except Exception as e:
+                print(e)
                 print("Failed to scrape data, retrying...")
                 self.driver.refresh()
                 continue
